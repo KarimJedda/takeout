@@ -7,3 +7,29 @@ Whether you're an individual investor, a trader, or a business operating in the 
 <p align="center">
   <img width="773" alt="dottakeout" src="https://github.com/user-attachments/assets/ea82fd61-f8fc-4ada-9d37-79a9757cf69f">
 </p>
+
+# Get started
+
+Find the application at https://dottakeout.xyz 
+
+Note: the demo is limited to 2024/08/19 and 4 chains (Polkadot, Hydration, People & AssetHub) mainly for ease of deployment. 
+
+# For developers
+
+Get data & run the query
+
+```bash
+wget 
+duckdb dottakeout.db 
+```
+
+Then run some queries
+
+```sql 
+SELECT number FROM polkadot WHERE json_extract(extrinsics, '$')::TEXT LIKE '%1Z6%';
+```
+
+
+# License
+
+MIT
