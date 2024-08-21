@@ -31,8 +31,8 @@ SELECT number FROM polkadot WHERE json_extract(extrinsics, '$')::TEXT LIKE '%1Z6
 
 # Team
 
-William Stevension
-Karim Jedda
+- William Stevension
+- Karim Jedda
 
 Related: https://github.com/wsteves/polkadot-address-collector 
 
