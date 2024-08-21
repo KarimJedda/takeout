@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Takeout Page{% endblock %}
+
+{% block content %}
+    <h1>Takeout Page</h1>
+    <a href="/takeoutv2">Try out the new version</a>
+    <p>
+        Let's find all your transactions on all of Polkadot.
+    </p>
+    <form method="POST" class="mt-4" id="takeoutForm">
+        <div class="form-group">
+            <label for="addressInput">Enter your addresses:</label>
+            <input type="text" class="form-control" id="addressInput" placeholder="Enter an address">
+            <button type="button" class="btn btn-secondary mt-2" id="addAddress">Add Address</button>
+        </div>
+        <br>
+        <!-- Container for address chips -->
+        <div id="addressChips" class="mb-3" style="display: flex; flex-wrap: wrap; gap: 8px;">
+            
+        </div>
+        <br>
+        <input type="hidden" name="addresses" id="addressesInput">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    {% if addresses %}
+        <h2 class="mt-4">Submitted Addresses:</h2>
+        <ul class="list-group">
+            {% for address in addresses %}
+                <li class="list-group-item">{{ address }}</li>
+            {% endfor %}
+        </ul>
+        <br>
+        <button type="submit" class="btn btn-outline-secondary">Request Takeout 🛒</button>
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function(){
+        console.log("Page loaded!");
+
+        // Array to store addresses
+        let addressArray = [];
+
+        // Add address to the chip list
+        $('#addAddress').on('click', function() {
+            let address = $('#addressInput').val().trim();
+            if (address) {
+                addressArray.push(address);
+                updateChips();
+                $('#addressInput').val(''); // Clear the input field
+            }
+        });
+
+        // Update the chip list and hidden input
+        function updateChips() {
+            $('#addressChips').empty(); // Clear existing chips
+            addressArray.forEach((address, index) => {
+                let chip = `<span class="badge text-bg-secondary" style="padding: 8px; display: inline-flex; align-items: center;">
+                               ${address} 
+                               <span class="badge badge-light ml-2 chip-remove" data-index="${index}" style="cursor:pointer;">&times;</span>
+                            </span>`;
+                $('#addressChips').append(chip);
+            });
+            $('#addressesInput').val(addressArray.join(',')); // Update the hidden input field
+        }
+
+        // Remove address from the chip list
+        $(document).on('click', '.chip-remove', function() {
+            let index = $(this).data('index');
+            addressArray.splice(index, 1);
+            updateChips();
+        });
+    });
+</script>
+{% endblock %}
